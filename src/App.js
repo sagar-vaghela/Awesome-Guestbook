@@ -1,19 +1,19 @@
-import { BrowserRouter } from 'react-router-dom';
-import Header from './component/header';
-import GuestBookRoutes from './routes';
-import { Provider } from 'react-redux';
-import store from './redux/store';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Box } from '@mui/system';
+import { BrowserRouter } from "react-router-dom";
+import Header from "./component/header";
+import GuestBookRoutes from "./routes";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Box } from "@mui/system";
 
 const theme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
     primary: {
-      main: '#EF5742',
-      font: 'Roboto, sans-serif'
-    }
-  }
+      main: "#EF5742",
+      font: "Roboto, sans-serif",
+    },
+  },
 });
 
 const App = () => {

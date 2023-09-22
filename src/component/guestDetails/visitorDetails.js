@@ -1,10 +1,17 @@
-import React from "react";
-
+import React from 'react';
+import { Button } from "@mui/material";
 const VisitorDetailsTable = () => {
-  const guestData = JSON.parse(localStorage.getItem("formData")) || [];
+  const guestData = JSON.parse(localStorage.getItem('formData')) || [];
+
+  const handleRemove = () => {
+    //
+  }
 
   return (
     <>
+      <Button variant="contained" color={'error'} onClick={handleRemove}>
+        Remove
+      </Button>
       <table>
         <thead>
           <tr>
