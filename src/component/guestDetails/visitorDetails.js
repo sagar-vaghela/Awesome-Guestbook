@@ -1,36 +1,80 @@
-import React from 'react';
-import { Button } from "@mui/material";
-const VisitorDetailsTable = () => {
-  const guestData = JSON.parse(localStorage.getItem('formData')) || [];
+import React, { useState, useEffect } from 'react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 
-  const handleRemove = () => {
-    //
-  }
+  Button,
+  Box
+} from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { removeSelectedRows } from '../../redux/action';
 
+const VisitorDetailsTable = (guestData) => {
+  const [selectAll, setSelectAll] = useState(false);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const columns = [
+    { id: 'firstName', label: 'First Name' },
+    { id: 'email', label: 'Email' },
+    { id: 'department', label: 'Department' }
+  ];
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const allChecked = selectedRows.every((row) => row.checked);
+    console.log('allChecked', allChecked);
+    setSelectAll(allChecked);
+  }, []);
+
+  const handleRemoveButtonClick = () => {
+    const idsToRemove = selectedRows.filter((row) => row.checked).map((row) => row.id);
+    const storedData = JSON.parse(localStorage.getItem('formData')) || [];
+    const updatedData = storedData.filter((row) => !idsToRemove.includes(row.id));
+    localStorage.setItem('formData', JSON.stringify(updatedData));
+
+    const updatedRows = selectedRows.filter((row) => !idsToRemove.includes(row.id));
+    setSelectedRows(updatedRows);
+
+    dispatch(removeSelectedRows(idsToRemove));
+  };
+
+  console.log('guestData', guestData);
+console.log('selectAll', selectAll)
   return (
     <>
-      <Button variant="contained" color={'error'} onClick={handleRemove}>
+    <h1 style={{fontWeight:400}}>Visitor management</h1>
+    <Box sx={{pb:2}}>
+    <Button variant="contained" color={'error'} onClick={handleRemoveButtonClick}>
         Remove
       </Button>
-      <table>
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Email</th>
-            <th>Department</th>
-          </tr>
-        </thead>
-        <tbody>
-          {guestData &&
-            guestData?.map((guest, index) => (
-              <tr key={index}>
-                <td>{guest.firstName}</td>
-                <td>{guest.email}</td>
-                <td>{guest.department}</td>
-              </tr>
+    </Box>
+     
+      <TableContainer component={Paper} sx={{
+        background:'white',
+        color:'black'
+      }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell key={column.id} sx={{color:'black'}}>{column.label}</TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {guestData.guestData?.map((row) => (
+              <TableRow key={row.id}>
+                {columns.map((column) => (
+                  <TableCell key={column.id} sx={{color:'black'}}>{row[column.id]}</TableCell>
+                ))}
+              </TableRow>
             ))}
-        </tbody>
-      </table>
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 };
