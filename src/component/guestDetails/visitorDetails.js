@@ -7,7 +7,6 @@ import {
   TableHead,
   TableRow,
   Paper,
-
   Button,
   Box
 } from '@mui/material';
@@ -42,25 +41,30 @@ const VisitorDetailsTable = (guestData) => {
   };
 
   console.log('guestData', guestData);
-console.log('selectAll', selectAll)
+  console.log('selectAll', selectAll);
+  
   return (
     <>
-    <h1 style={{fontWeight:400}}>Visitor management</h1>
-    <Box sx={{pb:2}}>
-    <Button variant="contained" color={'error'} onClick={handleRemoveButtonClick}>
-        Remove
-      </Button>
-    </Box>
-     
-      <TableContainer component={Paper} sx={{
-        background:'white',
-        color:'black'
-      }}>
+      <h1 style={{ fontWeight: 400 }}>Visitor management</h1>
+      <Box sx={{ pb: 2 }}>
+        <Button variant="contained" onClick={handleRemoveButtonClick}>
+          Remove
+        </Button>
+      </Box>
+
+      <TableContainer
+        component={Paper}
+        sx={{
+          background: 'white',
+          color: 'black'
+        }}>
         <Table>
           <TableHead>
             <TableRow>
               {columns.map((column) => (
-                <TableCell key={column.id} sx={{color:'black'}}>{column.label}</TableCell>
+                <TableCell key={column.id} sx={{ color: 'black' }}>
+                  {column.label}
+                </TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -68,7 +72,9 @@ console.log('selectAll', selectAll)
             {guestData.guestData?.map((row) => (
               <TableRow key={row.id}>
                 {columns.map((column) => (
-                  <TableCell key={column.id} sx={{color:'black'}}>{row[column.id]}</TableCell>
+                  <TableCell key={column.id} sx={{ color: 'black' }}>
+                    {row[column.id]}
+                  </TableCell>
                 ))}
               </TableRow>
             ))}
