@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import {
   Table,
@@ -8,41 +9,60 @@ import {
   TableRow,
   Paper,
   Button,
-  Box
+  Box,
+  Checkbox,
 } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { removeSelectedRows } from '../../redux/action';
 
-const VisitorDetailsTable = (guestData) => {
+const VisitorDetailsTable = ({ guestData, setGuestData }) => {
   const [selectAll, setSelectAll] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const columns = [
     { id: 'firstName', label: 'First Name' },
     { id: 'email', label: 'Email' },
-    { id: 'department', label: 'Department' }
+    { id: 'department', label: 'Department' },
   ];
   const dispatch = useDispatch();
+
   useEffect(() => {
-    const allChecked = selectedRows.every((row) => row.checked);
-    console.log('allChecked', allChecked);
+    const allChecked = guestData.length > 0 && selectedRows.length === guestData.length;
     setSelectAll(allChecked);
-  }, []);
+  }, [selectedRows, guestData]);
+
+  const handleHeaderCheckboxChange = () => {
+    setSelectAll(!selectAll);
+    const updatedRows = selectAll ? [] : guestData.map((row) => row.id);
+    setSelectedRows(updatedRows);
+  };
+
+  const handleCheckboxChange = (id) => {
+    const isChecked = selectedRows.includes(id);
+    let updatedRows;
+
+    if (isChecked) {
+      updatedRows = selectedRows.filter((rowId) => rowId !== id);
+    } else {
+      updatedRows = [...selectedRows, id];
+    }
+
+    setSelectedRows(updatedRows);
+    setSelectAll(false);
+  };
 
   const handleRemoveButtonClick = () => {
-    const idsToRemove = selectedRows.filter((row) => row.checked).map((row) => row.id);
+    const idsToRemove = selectedRows;
     const storedData = JSON.parse(localStorage.getItem('formData')) || [];
     const updatedData = storedData.filter((row) => !idsToRemove.includes(row.id));
     localStorage.setItem('formData', JSON.stringify(updatedData));
 
-    const updatedRows = selectedRows.filter((row) => !idsToRemove.includes(row.id));
-    setSelectedRows(updatedRows);
-
+    const updatedRows = guestData.filter((row) => !idsToRemove.includes(row.id));
+    setSelectedRows([]);
+    setSelectAll(false);
+    setGuestData(updatedRows);
     dispatch(removeSelectedRows(idsToRemove));
   };
 
-  console.log('guestData', guestData);
-  console.log('selectAll', selectAll);
-  
   return (
     <>
       <h1 style={{ fontWeight: 400 }}>Visitor management</h1>
@@ -52,15 +72,13 @@ const VisitorDetailsTable = (guestData) => {
         </Button>
       </Box>
 
-      <TableContainer
-        component={Paper}
-        sx={{
-          background: 'white',
-          color: 'black'
-        }}>
+      <TableContainer component={Paper} sx={{ background: 'white', color: 'black' }}>
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>
+                <Checkbox checked={selectAll} onChange={handleHeaderCheckboxChange} />
+              </TableCell>
               {columns.map((column) => (
                 <TableCell key={column.id} sx={{ color: 'black' }}>
                   {column.label}
@@ -69,8 +87,14 @@ const VisitorDetailsTable = (guestData) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {guestData.guestData?.map((row) => (
+            {guestData.map((row) => (
               <TableRow key={row.id}>
+                <TableCell>
+                  <Checkbox
+                    checked={selectedRows.includes(row.id)}
+                    onChange={() => handleCheckboxChange(row.id)}
+                  />
+                </TableCell>
                 {columns.map((column) => (
                   <TableCell key={column.id} sx={{ color: 'black' }}>
                     {row[column.id]}

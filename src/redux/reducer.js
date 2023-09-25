@@ -12,12 +12,9 @@ const formReducer = (state = initialState, action) => {
         formData: action.payload,
       };
       case DELETE_GUEST_DETAILS:
-        const updatedData = state.formData.filter(
-          (row) => !action.payload.includes(row.id)
-        );
         return {
           ...state,
-          formData: updatedData,
+          formData: action.payload,
         };
     default:
       return state;

@@ -7,13 +7,13 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   Grid,
   InputLabel,
   MenuItem,
   Select,
   TextField,
   Typography,
-  useTheme
 } from '@mui/material';
 import VisitorDetailsTable from './visitorDetails';
 
@@ -44,8 +44,10 @@ const VisitorForm = () => {
   });
   const [saveToLocalStorage, setSaveToLocalStorage] = useState(false);
   const dispatch = useDispatch();
-  const theme = useTheme();
   const [guestData, setGuestData] = useState([]);
+  const [nameError, setNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [departmentError, setDepartmentError] = useState('');
 
   const updateGuestDataFromLocalStorage = () => {
     const dataFromLocalStorage = JSON.parse(localStorage.getItem('formData')) || [];
@@ -68,8 +70,37 @@ const VisitorForm = () => {
     setSaveToLocalStorage(e.target.checked);
   };
 
+  const validateForm = () => {
+    let isValid = true;
+    
+    setNameError('');
+    setEmailError('');
+    setDepartmentError('');
+
+    if (formData.firstName.trim() === '') {
+      setNameError('Full Name is required');
+      isValid = false;
+    }
+
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (formData.email.trim() === '') {
+      setEmailError('Email is required');
+      isValid = false;
+    } else if (!emailPattern.test(formData.email)) {
+      setEmailError('Invalid Email Address');
+      isValid = false;
+    }
+    if (formData.department === '') {
+      setDepartmentError('Age is required');
+      isValid = false;
+    }
+
+    return isValid;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (validateForm()) {
     dispatch(saveFormData(formData));
 
     if (saveToLocalStorage) {
@@ -78,10 +109,10 @@ const VisitorForm = () => {
       localStorage.setItem('formData', JSON.stringify(savedData));
       updateGuestDataFromLocalStorage();
     }
+  }
   };
 
   const handleReset = () => {
-    // Clear all form fields and reset the checkbox
     setFormData({
       firstName: '',
       department: '',
@@ -89,9 +120,6 @@ const VisitorForm = () => {
     });
     setSaveToLocalStorage(false);
   };
-
-  console.log('theme', theme);
-
   return (
     <>
       <Grid container spacing={3}>
@@ -106,6 +134,8 @@ const VisitorForm = () => {
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
+              error={nameError}
+              helperText={formData.firstName.length === 0 ?  nameError : ''}
             />
 
             <TextField
@@ -115,6 +145,8 @@ const VisitorForm = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
+              error={emailError}
+              helperText={formData.email.length === 0 ? emailError : '' }
             />
 
             <FormControl fullWidth>
@@ -126,6 +158,8 @@ const VisitorForm = () => {
                 label="Age"
                 value={formData.department}
                 onChange={handleChange}
+                error={departmentError}
+                helperText={formData.department === '' ?  departmentError : ''}
                 sx={{
                   '& .MuiSelect-icon': {
                     fill: '#000 '
@@ -137,6 +171,7 @@ const VisitorForm = () => {
                   </MenuItem>
                 ))}
               </Select>
+              <FormHelperText style={{color:'#d32f2f'}}>{!formData.department ? departmentError :''}</FormHelperText>
             </FormControl>
 
             <Box>
@@ -171,7 +206,7 @@ const VisitorForm = () => {
         </Grid>
 
         <Grid item lg={9} md={7} sm={12} xs={12}>
-          <VisitorDetailsTable guestData={guestData} />
+          <VisitorDetailsTable guestData={guestData} setGuestData={setGuestData}/>
         </Grid>
       </Grid>
     </>
