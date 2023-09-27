@@ -13,7 +13,7 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography,
+  Typography
 } from '@mui/material';
 import VisitorDetailsTable from './visitorDetails';
 
@@ -72,7 +72,7 @@ const VisitorForm = () => {
 
   const validateForm = () => {
     let isValid = true;
-    
+
     setNameError('');
     setEmailError('');
     setDepartmentError('');
@@ -101,15 +101,15 @@ const VisitorForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-    dispatch(saveFormData(formData));
+      dispatch(saveFormData(formData));
 
-    if (saveToLocalStorage) {
-      const savedData = JSON.parse(localStorage.getItem('formData')) || [];
-      savedData.push(formData);
-      localStorage.setItem('formData', JSON.stringify(savedData));
-      updateGuestDataFromLocalStorage();
+      if (saveToLocalStorage) {
+        const savedData = JSON.parse(localStorage.getItem('formData')) || [];
+        savedData.push(formData);
+        localStorage.setItem('formData', JSON.stringify(savedData));
+        updateGuestDataFromLocalStorage();
+      }
     }
-  }
   };
 
   const handleReset = () => {
@@ -135,7 +135,7 @@ const VisitorForm = () => {
               value={formData.firstName}
               onChange={handleChange}
               error={nameError}
-              helperText={formData.firstName.length === 0 ?  nameError : ''}
+              helperText={formData.firstName.length === 0 ? nameError : ''}
             />
 
             <TextField
@@ -146,7 +146,7 @@ const VisitorForm = () => {
               value={formData.email}
               onChange={handleChange}
               error={emailError}
-              helperText={formData.email.length === 0 ? emailError : '' }
+              helperText={formData.email.length === 0 ? emailError : ''}
             />
 
             <FormControl fullWidth>
@@ -159,19 +159,22 @@ const VisitorForm = () => {
                 value={formData.department}
                 onChange={handleChange}
                 error={departmentError}
-                helperText={formData.department === '' ?  departmentError : ''}
+                helperText={formData.department === '' ? departmentError : ''}
                 sx={{
                   '& .MuiSelect-icon': {
                     fill: '#000 '
                   }
-                }}>
+                }}
+              >
                 {departmentInfo.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
                 ))}
               </Select>
-              <FormHelperText style={{color:'#d32f2f'}}>{!formData.department ? departmentError :''}</FormHelperText>
+              <FormHelperText style={{ color: '#d32f2f' }}>
+                {!formData.department ? departmentError : ''}
+              </FormHelperText>
             </FormControl>
 
             <Box>
@@ -190,7 +193,8 @@ const VisitorForm = () => {
                 onClick={handleReset}
                 sx={{
                   width: '40%'
-                }}>
+                }}
+              >
                 Reset Form
               </Button>
               <Button
@@ -198,7 +202,8 @@ const VisitorForm = () => {
                 onClick={handleSubmit}
                 sx={{
                   width: '60%'
-                }}>
+                }}
+              >
                 Add new visitor
               </Button>
             </Box>
@@ -206,7 +211,7 @@ const VisitorForm = () => {
         </Grid>
 
         <Grid item lg={9} md={7} sm={12} xs={12}>
-          <VisitorDetailsTable guestData={guestData} setGuestData={setGuestData}/>
+          <VisitorDetailsTable guestData={guestData} setGuestData={setGuestData} />
         </Grid>
       </Grid>
     </>

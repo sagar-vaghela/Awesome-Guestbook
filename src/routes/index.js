@@ -1,7 +1,7 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import { ROOT_ROUTE } from "../lib";
-import GuestDetails from "../component/guestDetails";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { ROOT_ROUTE } from '../lib';
+import GuestDetails from '../component/guestDetails';
 
 const GuestBookRoutes = () => {
   return (

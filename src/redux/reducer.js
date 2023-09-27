@@ -1,7 +1,7 @@
-import { ADD_GUEST_DETAILS, DELETE_GUEST_DETAILS } from "./actionTypes";
+import { ADD_GUEST_DETAILS, DELETE_GUEST_DETAILS } from './actionTypes';
 
 const initialState = {
-  formData: [],
+  formData: []
 };
 
 const formReducer = (state = initialState, action) => {
@@ -9,13 +9,13 @@ const formReducer = (state = initialState, action) => {
     case ADD_GUEST_DETAILS:
       return {
         ...state,
-        formData: action.payload,
+        formData: action.payload
       };
-      case DELETE_GUEST_DETAILS:
-        return {
-          ...state,
-          formData: action.payload,
-        };
+    case DELETE_GUEST_DETAILS:
+      return {
+        ...state,
+        formData: action.payload
+      };
     default:
       return state;
   }

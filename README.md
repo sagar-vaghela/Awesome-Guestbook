@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# React | Redux | Material-Ui | Validation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a React Application with Redux based Visitor management app and configured with:
 
-## Available Scripts
+1. *Linters:* ESLint and Prettier.
+2. *React specific folders:* `components`, `lib`,`actions`, `reducers`, `store` , `routes`, and `css` (Folder Structure).
+3. *Styled-Components:* configured Material-UI types.
+4. *Redux:* for state management.
+5. *Validation:* Validate form.
 
-In the project directory, you can run:
+## Project structure
 
-### `npm start`
+The app has the following structure:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+`components`, `lib`,`actions`, `reducers`, `store` , `routes`, and `css`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- `components`: React components used accross the app.
+- `lib`: Contains the unilities function and constant values.
+- `actions`: Define functions for what to do.
+- `reducers`: Contains what should next once Action will perform.
+- `store`: Redux store which contains single object with holding entire data of application.
+- `routes`: used for redirection from one page to another.
+- `css`: Define the layout, styling, and design of React components.
 
-### `npm test`
+### Tasks : What I done.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Create React Application with redux-based Visitor Management App.
+2. Used Material UI for Design - https://mui.com/
+3. Used this Figma for Design - https://www.figma.com/file/NNG1aL0c7PCToYFSAwxkch/Awesome-Guestbook?type=design&node-id=0-1&mode=design&t=NehVMVYl9JNlvPTg-0
+4. App perform like below step,
+- `Home Screen` - `Add Visitor`
+    - Insert form input field.
+    - Select dropdown item.
+    - Conformation checkbox before adding new visitor to the table.
+    - Add new customer button for adding the new visitor to the table.
+    - Without checking the conformation check box we can not add the new visitor to the table.
+    - If the form is empty then it will ot let us add new visitor
+    - reset form button to reset the inputed fields.
 
-### `npm run build`
+5. `Home Screen` - `Show Visitor Data on Table`
+    - Newly added visitor will shown on this table.
+    - Every row has one checkbox to select the particular data.
+    - Select All checkbox is also there to select all the row of table.
+    - We can remove any row by selecting the row and clicking the remove button.
+    - We can remove all the row by selecting all rows by select all checkbox and clicking the remove button.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+6. App is responsive as much as I can.
+7. Validations are implimented.
+8. Used Local is Storage for storing data so there is no need API.
+9. Used redux concept for state management.
+10. Setuped ESLint for Code standardization.
+11. Setuped Prettier for Code formatting.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### I Make sure below things for this app.
 
-### `npm run eject`
+1. Structure of the code: both in terms of the actual code and the organization of files/folders.
+2. React patterns: efficient and well-structure React code.
+3. Redux: to manage the application's state in a predictable and centralized manner.
+4. Documentation: clear and well commented your code.
+5. Git processes: clear and well-structured your commits and commit messages are.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Prerequisites
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To set up the codebase and the required dependencies, simply run the following command.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Installing the dependencies
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+$ npm install
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Running the app
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## development
+$ npm run start
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## production
+$ npm run build && npm run start
